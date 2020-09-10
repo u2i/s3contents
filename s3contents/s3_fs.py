@@ -93,7 +93,6 @@ class S3FS(GenericFS):
             config_kwargs=config_kwargs,
             s3_additional_kwargs=s3_additional_kwargs,
             session=self.boto3_session,
-            verify=False
         )
 
         self.init()
