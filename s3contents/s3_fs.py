@@ -74,7 +74,7 @@ class S3FS(GenericFS):
         client_kwargs = {
             "endpoint_url": self.endpoint_url,
             "region_name": self.region_name,
-            "use_ssl": False,
+            "verify": False,
         }
         config_kwargs = {}
         if self.signature_version:
@@ -93,7 +93,7 @@ class S3FS(GenericFS):
             config_kwargs=config_kwargs,
             s3_additional_kwargs=s3_additional_kwargs,
             session=self.boto3_session,
-            use_ssl=False
+            verify=False
         )
 
         self.init()
