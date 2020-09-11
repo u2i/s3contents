@@ -81,8 +81,8 @@ class S3FS(GenericFS):
             config_kwargs["signature_version"] = self.signature_version
 
         s3_additional_kwargs = {
-            "sse_customer_algorithm": 'AES256',
-            "sse_customer_key": 'nN5hNoSAcGyF3o0ezobr5IeQE0/QF1NW/l8EY6l3kvI='
+            "SSECustomerAlgorithm": 'AES256',
+            "SSECustomerKey": 'nN5hNoSAcGyF3o0ezobr5IeQE0/QF1NW/l8EY6l3kvI='
          }
 
 
