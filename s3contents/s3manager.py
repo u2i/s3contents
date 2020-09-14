@@ -34,6 +34,7 @@ class S3ContentsManager(GenericContentsManager):
     sse = Unicode(help="Type of server-side encryption to use").tag(config=True)
 
     kms_key_id = Unicode(help="KMS ID to use to encrypt workbooks").tag(config=True)
+    verify = Unicode(help="Use ssl verification", allow_none=True, default_value=True).tag(config=True)
 
     session_token = Unicode(
         help="S3/AWS session token", allow_none=True, default_value=None
