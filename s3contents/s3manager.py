@@ -64,7 +64,7 @@ class S3ContentsManager(GenericContentsManager):
             sse=self.sse,
             kms_key_id=self.kms_key_id,
             boto3_session=self.boto3_session,
-            verify=self.verify
+            verify="true"
         )
 
     def run_init_s3_hook(self):
