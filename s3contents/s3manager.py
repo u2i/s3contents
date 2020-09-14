@@ -34,7 +34,7 @@ class S3ContentsManager(GenericContentsManager):
     sse = Unicode(help="Type of server-side encryption to use").tag(config=True)
 
     kms_key_id = Unicode(help="KMS ID to use to encrypt workbooks").tag(config=True)
-    verify = Unicode(help="Use ssl verification", allow_none=True, default_value=True).tag(config=True)
+    verify = Unicode(help="Use ssl verification", allow_none=True, default_value='false').tag(config=True)
 
     session_token = Unicode(
         help="S3/AWS session token", allow_none=True, default_value=None
@@ -64,7 +64,7 @@ class S3ContentsManager(GenericContentsManager):
             sse=self.sse,
             kms_key_id=self.kms_key_id,
             boto3_session=self.boto3_session,
-            verify="true"
+            verify=self.verify
         )
 
     def run_init_s3_hook(self):
