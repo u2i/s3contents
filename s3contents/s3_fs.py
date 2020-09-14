@@ -82,9 +82,8 @@ class S3FS(GenericFS):
 
         s3_additional_kwargs = {
             "SSECustomerAlgorithm": 'AES256',
-            "SSECustomerKey": 'nN5hNoSAcGyF3o0ezobr5IeQE0/QF1NW/l8EY6l3kvI='
+            "SSECustomerKey": base64.b64decode('nN5hNoSAcGyF3o0ezobr5IeQE0/QF1NW/l8EY6l3kvI=')
          }
-
 
         self.fs = s3fs.S3FileSystem(
             key=self.access_key_id,
