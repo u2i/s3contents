@@ -90,12 +90,6 @@ class S3FS(GenericFS):
             s3_additional_kwargs["SSECustomerAlgorithm"] = self.sse_customer_algorithm
             s3_additional_kwargs["SSECustomerKey"] = base64.b64decode(self.sse_customer_key)
 
-        #TODO: Remove these kwargs
-        # s3_additional_kwargs = {
-        #     "SSECustomerAlgorithm": self.sse_customer_algorithm,
-        #     "SSECustomerKey": base64.b64decode('5sd/gfrxjIMZKgu/+eOVCJops6OObxJYfeRX1asibP4=')
-        #  }
-
         self.fs = s3fs.S3FileSystem(
             key=self.access_key_id,
             secret=self.secret_access_key,
