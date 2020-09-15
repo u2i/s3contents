@@ -34,6 +34,8 @@ class S3ContentsManager(GenericContentsManager):
     sse = Unicode(help="Type of server-side encryption to use").tag(config=True)
 
     verify = Bool(True, help="Use ssl to verify").tag(config=True)
+    sse_customer_key = Unicode(help="SSE Customer provided key to use to encrypt workbooks").tag(config=True)
+    sse_customer_algorithm = Unicode(help="SSE algorithm to use to encrypt workbooks").tag(config=True)
 
     kms_key_id = Unicode(help="KMS ID to use to encrypt workbooks").tag(config=True)
 
@@ -65,7 +67,9 @@ class S3ContentsManager(GenericContentsManager):
             sse=self.sse,
             kms_key_id=self.kms_key_id,
             boto3_session=self.boto3_session,
-            verify=self.verify
+            verify=self.verify,
+            sse_customer_algorithm=self.sse_customer_algorithm,
+            sse_customer_key = self.sse_customer_key,
         )
 
     def run_init_s3_hook(self):

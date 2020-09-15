@@ -49,6 +49,8 @@ class S3FS(GenericFS):
     signature_version = Unicode(help="").tag(config=True)
     sse = Unicode(help="Type of server-side encryption to use").tag(config=True)
     kms_key_id = Unicode(help="KMS ID to use to encrypt workbooks").tag(config=True)
+    sse_customer_key = Unicode(help="SSE Customer provided key to use to encrypt workbooks").tag(config=True)
+    sse_customer_algorithm = Unicode(help="SSE algorithm to use to encrypt workbooks").tag(config=True)
 
     prefix = Unicode("", help="Prefix path inside the specified bucket").tag(
         config=True
@@ -77,14 +79,22 @@ class S3FS(GenericFS):
             "region_name": self.region_name,
             "verify": self.verify,
         }
+
         config_kwargs = {}
         if self.signature_version:
             config_kwargs["signature_version"] = self.signature_version
 
-        s3_additional_kwargs = {
-            "SSECustomerAlgorithm": 'AES256',
-            "SSECustomerKey": base64.b64decode('5sd/gfrxjIMZKgu/+eOVCJops6OObxJYfeRX1asibP4=')
-         }
+        s3_additional_kwargs = {}
+
+        if self.sse_customer_algorithm:
+            s3_additional_kwargs["SSECustomerAlgorithm"] = self.sse_customer_algorithm
+            s3_additional_kwargs["SSECustomerKey"] = base64.b64decode(self.sse_customer_key)
+
+        #TODO: Remove these kwargs
+        # s3_additional_kwargs = {
+        #     "SSECustomerAlgorithm": self.sse_customer_algorithm,
+        #     "SSECustomerKey": base64.b64decode('5sd/gfrxjIMZKgu/+eOVCJops6OObxJYfeRX1asibP4=')
+        #  }
 
         self.fs = s3fs.S3FileSystem(
             key=self.access_key_id,
