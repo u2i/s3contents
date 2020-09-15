@@ -4,7 +4,7 @@ from urllib.parse import urlparse
 from traitlets import Any
 
 from s3contents.genericmanager import GenericContentsManager, from_dict
-from s3contents.ipycompat import Unicode
+from s3contents.ipycompat import Unicode, Bool
 from s3contents.s3_fs import S3FS
 
 
@@ -33,8 +33,9 @@ class S3ContentsManager(GenericContentsManager):
     delimiter = Unicode("/", help="Path delimiter").tag(config=True)
     sse = Unicode(help="Type of server-side encryption to use").tag(config=True)
 
+    verify = Bool(True, help="Use ssl to verify").tag(config=True)
+
     kms_key_id = Unicode(help="KMS ID to use to encrypt workbooks").tag(config=True)
-    verify = Unicode(help="Use ssl verification", allow_none=True, default_value='false').tag(config=True)
 
     session_token = Unicode(
         help="S3/AWS session token", allow_none=True, default_value=None
@@ -64,7 +65,7 @@ class S3ContentsManager(GenericContentsManager):
             sse=self.sse,
             kms_key_id=self.kms_key_id,
             boto3_session=self.boto3_session,
-            verify="false"
+            verify=self.verify
         )
 
     def run_init_s3_hook(self):

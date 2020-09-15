@@ -11,7 +11,7 @@ from tornado.web import HTTPError
 from traitlets import Any
 
 from s3contents.genericfs import GenericFS, NoSuchFile
-from s3contents.ipycompat import Unicode
+from s3contents.ipycompat import Unicode, Bool
 
 
 SAMPLE_ACCESS_POLICY = """
@@ -54,6 +54,7 @@ class S3FS(GenericFS):
         config=True
     )
     delimiter = Unicode("/", help="Path delimiter").tag(config=True)
+    verify = Bool(True, help="Use ssl to verify").tag(config=True)
 
     dir_keep_file = Unicode(
         ".s3keep", help="Empty file to create when creating directories"
@@ -74,7 +75,7 @@ class S3FS(GenericFS):
         client_kwargs = {
             "endpoint_url": self.endpoint_url,
             "region_name": self.region_name,
-            "verify": False,
+            "verify": self.verify,
         }
         config_kwargs = {}
         if self.signature_version:
